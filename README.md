@@ -1,70 +1,90 @@
-# Getting Started with Create React App
+# Perlego Survey (React + Firebase)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Lightweight survey application with an admin dashboard to manage questions, collect responses, and view simple statistics. The front-end is a React app and it uses Firebase for auth, Firestore and storage.
 
-## Available Scripts
+**Highlights**
 
-In the project directory, you can run:
+- Create and manage a single active survey (title, description, questions)
+- Collect responses and store them in Firestore
+- Admin UI with protected routes for managing questions, responses and contacts
+- Basic statistics (counts, averages, distributions)
 
-### `npm start`
+## Tech stack
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- Frontend: React (Create React App), React Router
+- Backend services: Firebase (Auth, Firestore)
+- Optional server utilities: Express
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Quick start
 
-### `npm test`
+Prerequisites:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Node.js 16+ and npm
+- A Firebase project with Web app credentials
 
-### `npm run build`
+1. Clone the repository
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+git clone <repo-url>
+cd perlego
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+2. Install dependencies
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+npm install
+```
 
-### `npm run eject`
+3. Configure Firebase credentials
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Create a `.env` file in the project root with the following variables (replace values from your Firebase console):
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```
+REACT_APP_FIREBASE_API_KEY=your_api_key
+REACT_APP_FIREBASE_AUTH_DOMAIN=your_auth_domain
+REACT_APP_FIREBASE_PROJECT_ID=your_project_id
+REACT_APP_FIREBASE_STORAGE_BUCKET=your_storage_bucket
+REACT_APP_FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
+REACT_APP_FIREBASE_APP_ID=your_app_id
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+4. Run development server
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```bash
+npm start
+```
 
-## Learn More
+Open http://localhost:3000. Public pages include the home page and the survey form at `/survey`. Admin pages are under `/admin` and require authentication.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Available scripts
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- `npm start` — development server
+- `npm run build` — production build
+- `npm test` — run tests
 
-### Code Splitting
+These scripts are the defaults created by Create React App and are defined in `package.json`.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Configuration & structure
 
-### Analyzing the Bundle Size
+- Firebase initialization: `src/firebase/config.js` (reads env vars)
+- Firestore helpers: `src/firebase/server.js` (survey, responses, contacts, statistics)
+- Routes and pages: `src/App.jsx`, `src/pages/*`
+- Admin UI components: `src/components/AdminLayout.jsx`, `src/components/QuestionsManager.jsx`, `src/components/ResponsesViewer.jsx`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Usage notes
 
-### Making a Progressive Web App
+- Public survey path: `/survey` — submits answers to the `responses` collection in Firestore.
+- Admin dashboard: `/admin` — protected by `ProtectedRoute` and uses Firebase Authentication.
+- To change the active survey content, use the admin UI which updates the `surveys/activeSurvey` document.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Report issues via the repository Issues tab.
 
-### Advanced Configuration
+## Where to get help
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+- Review source files under `src/` to understand behavior, especially `src/firebase/server.js` for data operations.
 
-### Deployment
+## Maintainers
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+- Current codebase owner: TaranuMircea
 
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---
